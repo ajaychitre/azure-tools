@@ -39,7 +39,7 @@ Follow the steps given below:
 6. Select 'Event Hub' in the drop-down box.
 7. Give a name to the Input under 'Input alias'.
 8. It will pre-populate rest of the values. Confirm them & click on 'Save'.
-9. It will test connection & create the iput.
+9. It will test connection & create the input.
 10. Click on 'Outputs'under 'Job Topology' & then on 'Add'.
 11. In the drop-down box select 'Cosmos DB'.
 12. Give a name to the Output under 'Output alias'.
@@ -131,7 +131,7 @@ Follow the steps given below:
 1. ***IMPORTANT***: Remember that you get charged by compute resources used so stop & release the resources that you no longer need.
 2. Stop the job that sends tweets to the Event Hub.
 3. Stop the Stream Analytics Job.
-4. If you're simply experimenting, you can simply 'Delete' the resource group which will delete all resources under it.
+4. If you're simply experimenting, you can 'Delete' the resource group which will delete all resources under it.
 
 
 
