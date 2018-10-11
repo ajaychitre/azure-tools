@@ -46,7 +46,7 @@ Follow the steps given below:
 13. Select your 'Account id' if it's not selected. Under 'Database' select 'Create new' & enter name of database.
 14. Enter value under 'Collection name pattern'
 15. ***IMPORTANT***: Under 'Document id', enter 'id'. This is 'name of the field in output events used to specify document id'. In our case, every tweet has a field called 'id' which is a unique identifier.
-16. Click on 'Save' to created the output.
+16. Click on 'Save' to create the output.
 17. Click on 'Functions' & then on 'Add'.
 18. In the drop-down, select 'Azure ML'.
 19. Enter 'sentiment' as 'Function alias'. Select 'Provide Azure ML manually'.
@@ -57,11 +57,11 @@ Follow the steps given below:
     ```
     WITH sentiment AS (  
     SELECT id, "user".screenName, text, sentiment(text) as result, retweetedStatus.retweetCount
-    FROM msinput
+    FROM <Your Input Alias>
     )  
 
     SELECT id, screenName, text, result.[Sentiment], result.[Score], retweetCount 
-    INTO cosmos
+    INTO <Your Output Alias>
     FROM sentiment
     ```
 24. Click on 'Save' to save the query.
@@ -99,7 +99,40 @@ cd azure-tools
 mvn clean package
 java -jar ./target/azure-tools-1.0-SNAPSHOT.jar
 ```
-This will start sending tweets to the Event Hub.
+This will start sending tweets to the Event Hub. Keep this job running.
+
+
+### Start Stream Analytics Job
+
+Follow the steps given below:
+
+1. On the 'Dashboard' click on the newly created Stream Analytics Job.
+2. Under 'Overview', click on 'Start'. Leave the 'Job output start time' to 'Now' & click on 'Start' button at the bottom.
+3. It takes about a minute to start the job.
+
+
+### Check output in Cosmos Db.
+
+Follow the steps given below:
+
+1. Wait till the Stream Analytics Job is in 'Running' state.
+2. Click on 'Azure Cosmos DB' in left menu bar.
+3. Click on the 'Account' you created above.
+4. Click on the 'Collection' created as 'Output' in your Stream Processing Job.
+5. Click on 'New SQL Query' tab. You can now enter queries such as this:
+```
+SELECT * FROM c where c.sentiment = 'negative' and c.retweetcount > 1000
+```
+
+### Cleanup
+
+Follow the steps given below:
+
+1. ***IMPORTANT***: Remember that you get charged by compute resources used so stop & release the resources that you no longer need.
+2. Stop the job that sends tweets to the Event Hub.
+3. Stop the Stream Analytics Job.
+4. If you're simply experimenting, you can simply 'Delete' the resource group which will delete all resources under it.
+
 
 
 
